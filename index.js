@@ -549,6 +549,23 @@ app.post('/markdown', (req, res) => {
   });
 });
 
+//update
+app.put('/markdown/:id', function(req, res) {
+  var markdownId = req.params.id;
+  var markdownText = req.body.markdownText;
+  var query = "UPDATE markdown SET markdown_text = ? WHERE id = ?";
+
+  connection.query(query, [markdownText, markdownId], function(error, results, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send("Error updating markdown");
+    } else {
+      console.log("Markdown updated successfully");
+      res.send("Markdown updated successfully");
+    }
+  });
+});
+
 //------------------------------------------------------------------
 // Start the server
 app.listen(3000, () => {
